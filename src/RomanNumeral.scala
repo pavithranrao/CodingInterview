@@ -13,17 +13,15 @@ object RomanNumeral {
 
   val dividers: Array[Int] = numberRoman.keys.toArray.sortWith(_ > _)
 
-  def romanToNumber(input: String): Int = {
-    val lastChars = input.last.toString * 2
-    (input.sliding(2).toList :+ lastChars).foldLeft((0, false)) {
-      case ((acc, skip), present) =>
-        (skip, romanNumeral.contains(present)) match {
-          case (true, _) => (acc, false)
-          case (false, true) => (acc + romanNumeral(present), true)
-          case _ => (acc + romanNumeral(present.head.toString), false)
-        }
+  def romanToNumber(input: String): Int =
+    input.foldRight((0, input.last)) {
+      case (present, (acc, prevChar)) =>
+        if (romanNumeral(present.toString) < romanNumeral(prevChar.toString))
+          (acc - romanNumeral(present.toString), present)
+        else
+          (acc + romanNumeral(present.toString), present)
     }._1
-  }
+
 
   def numberToRoman(input: Int): String =
     dividers.foldLeft(("", input)) {
