@@ -1,6 +1,6 @@
 object Util {
 
-  def reverseMap[A, B](inputMap: Map[A, B]): Map[B, List[A]] = {
+  def invertMap[A, B](inputMap: Map[A, B]): Map[B, List[A]] = {
     inputMap.foldLeft(Map[B, List[A]]()) {
       case (mapAccumulator, currentElement) =>
         if (mapAccumulator.contains(currentElement._2)) {
