@@ -16,10 +16,12 @@ object RomanNumeral {
   def romanToNumber(input: String): Int =
     input.foldRight((0, input.last)) {
       case (present, (acc, prevChar)) =>
-        if (romanNumeral(present.toString) < romanNumeral(prevChar.toString))
+        if (romanNumeral(present.toString) < romanNumeral(prevChar.toString)) {
           (acc - romanNumeral(present.toString), present)
-        else
+        }
+        else {
           (acc + romanNumeral(present.toString), present)
+        }
     }._1
 
 

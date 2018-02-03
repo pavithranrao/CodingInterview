@@ -1,4 +1,5 @@
-# Coding Interview
+# Coding 
+Interview
 ## Coding Interview question solved in Scala
 
 This repository contains the solutions for few of the coding interview questions from
