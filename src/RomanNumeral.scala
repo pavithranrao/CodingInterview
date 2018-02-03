@@ -14,7 +14,8 @@ object RomanNumeral {
   val dividers: Array[Int] = numberRoman.keys.toArray.sortWith(_ > _)
 
   def romanToNumber(input: String): Int = {
-    input.sliding(2).foldLeft((0, false)) {
+    val lastChars = input.last.toString * 2
+    (input.sliding(2).toList :+ lastChars).foldLeft((0, false)) {
       case ((acc, skip), present) =>
         (skip, romanNumeral.contains(present)) match {
           case (true, _) => (acc, false)
@@ -22,19 +23,18 @@ object RomanNumeral {
           case _ => (acc + romanNumeral(present.head.toString), false)
         }
     }._1
-
   }
 
-  def numberToRoman(input: Int): String = {
+  def numberToRoman(input: Int): String =
     dividers.foldLeft(("", input)) {
       case ((acc, numerator), divider) =>
         (acc + numberRoman(divider) * (numerator / divider), numerator % divider)
     }._1
-  }
+
 
   def main(args: Array[String]): Unit = {
 
-    val input = "IV"
+    val input = "VI"
     val number = romanToNumber(input)
     val roman = numberToRoman(number * 3)
 
