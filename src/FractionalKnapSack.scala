@@ -5,16 +5,14 @@ object FractionalKnapSack {
 
     val capacity = 150
 
-    val sortedItems = items.sortWith {
-      case (x, y) =>
-        val xRate = x._2.toFloat / x._1.toFloat
-        val yRate = y._2.toFloat / y._1.toFloat
-
-        xRate > yRate
-    }
+    val sortedItems = items.map {
+      x =>
+        val rate = x._2.toFloat / x._1.toFloat
+        (x._1, x._2, rate)
+    }.sortWith(_._3 > _._3)
 
     val finalValue = sortedItems.foldLeft((capacity, List[Int]())) {
-      case ((currentCapacity, acc), (weight, value)) =>
+      case ((currentCapacity, acc), (weight, value, _)) =>
         //        println(s"$currentCapacity -> $weight $value")
         if (currentCapacity != 0) {
           (currentCapacity - (weight min currentCapacity), acc :+ value)
