@@ -4,7 +4,6 @@ object MergeSort {
     val list = List(1, 4, 6, 2, 7)
     println(s"Before Sort : ${list.mkString(", ")}")
 
-    //    val answer = mergeSort(list)
     val comparatorFn = (a: Int, b: Int) => a < b
     val answer = genericMergeSort(list)(comparatorFn)
     println(s"After Sort : ${answer.mkString(", ")}")
