@@ -6,43 +6,15 @@ object MergeSort {
 
     //    val answer = mergeSort(list)
     val comparatorFn = (a: Int, b: Int) => a < b
-    val answer = genericMergeSort(list, comparatorFn)
+    val answer = genericMergeSort(list)(comparatorFn)
     println(s"After Sort : ${answer.mkString(", ")}")
 
     assert(answer == list.sorted)
     assert(Nil == List.empty)
   }
 
-  //  def mergeSort(list: List[Int]): List[Int] = {
-  //
-  //    def merge(left: List[Int], right: List[Int]): List[Int] = {
-  //      (left, right) match {
-  //        case (_, Nil) => left
-  //
-  //        case (Nil, _) => right
-  //
-  //        case (leftHead :: leftTail, rightHead :: rightTail) =>
-  //          if (leftHead < rightHead) {
-  //            leftHead :: merge(leftTail, right)
-  //          }
-  //          else {
-  //            rightHead :: merge(left, rightTail)
-  //          }
-  //      }
-  //    }
-  //
-  //    val n = list.length / 2
-  //    if (n == 0) {
-  //      list
-  //    }
-  //    else {
-  //      val (left, right) = list.splitAt(n)
-  //      merge(mergeSort(left), mergeSort(right))
-  //    }
-  //  }
-
-
-  def genericMergeSort[A](list: List[A], comparatorFn: (A, A) => Boolean): List[A] = {
+  def genericMergeSort[A](list: List[A])
+                         (implicit comparatorFn: (A, A) => Boolean): List[A] = {
 
     def genericMerge(left: List[A], right: List[A]): List[A] = {
       (left, right) match {
@@ -64,8 +36,8 @@ object MergeSort {
     }
     else {
       val (left, right) = list.splitAt(n)
-      genericMerge(genericMergeSort(left, comparatorFn),
-        genericMergeSort(right, comparatorFn))
+      genericMerge(genericMergeSort(left),
+        genericMergeSort(right))
     }
   }
 
