@@ -29,14 +29,13 @@ object MergeSort {
       }
     }
 
-    val n = list.length / 2
-    if (n == 0) {
+    val mid = list.length / 2
+    if (mid == 0) {
       list
     }
     else {
-      val (left, right) = list.splitAt(n)
-      genericMerge(genericMergeSort(left),
-        genericMergeSort(right))
+      val (left, right) = list.splitAt(mid)
+      genericMerge(genericMergeSort(left), genericMergeSort(right))
     }
   }
 
