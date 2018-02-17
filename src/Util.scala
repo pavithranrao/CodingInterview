@@ -10,14 +10,16 @@ object Util {
   case class Node(value: Int, var next: Option[Node] = None)
 
   object Node {
-    def push(head: Node, element: Node): Unit = {
+    def push(head: Node, element: Node, isSingleNode: Boolean = true): Unit = {
       var current = head
       while (current.next.isDefined) {
         current = current.next.get
       }
 
       current.next = Some(element)
-      element.next = None
+      if (isSingleNode) {
+        element.next = None
+      }
     }
 
     def printList(head: Node): Unit = {
@@ -42,8 +44,24 @@ object Util {
       Some(slowPtr)
     }
 
-    def sort(head: Option[Node]): Option[Node] = {
+    def sort(head: Option[Node])
+            (implicit comparatorFn: (Int, Int) => Boolean): Option[Node] = {
       MergeSortLinkedList.mergerSort(head)
+    }
+
+    def copyNode(node: Node): Node = {
+      node.copy(next = None)
+    }
+
+    def length(head: Node): Int = {
+      var length = 0
+      var current: Option[Node] = Some(head)
+      while (current.isDefined) {
+        length += 1
+        current = current.get.next
+      }
+
+      length
     }
 
     // Courtesy : https://gist.github.com/pathikrit/4af1c1c2c590c2478b0f
