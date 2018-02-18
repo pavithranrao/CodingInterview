@@ -56,11 +56,9 @@ object MergeSortLinkedList {
 
     println("The given list is :")
     printList(n1)
-
-
     val comparatorFn = (a: Int, b: Int) => a < b
 
-    println("\nThe sorted list is :")
+    println("The sorted list is :")
     val sortedList = mergerSort(Some(n1))(comparatorFn)
     printList(sortedList.get)
 
