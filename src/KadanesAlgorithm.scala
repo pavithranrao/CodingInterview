@@ -4,7 +4,6 @@ object KadanesAlgorithm {
   def getMaxSum(array: Array[Int]): Int = {
     val head = array.head
     val tail = array.tail
-    println(s"Given array : ${array.mkString(", ")}")
 
     tail.foldLeft(head, head) {
       case ((maxUpToHere, maxSoFar), present) =>
@@ -37,6 +36,7 @@ object KadanesAlgorithm {
 
     val array = Array(9, 6, -3, 7, -2, -4, 0, 1, 10, 5, 7, -10)
     // val array = Array(-10, 9)
+    println(s"Given array : ${array.mkString(", ")}")
 
     val maxSum = getMaxSum(array)
     println(s"Largest Sum is : $maxSum")
