@@ -11,18 +11,7 @@ object BinarySearch {
         case mid if input(mid) < target => recursiveSearch(mid + 1, high)
         case mid => Some(mid)
       }
-
-    //    def recursiveSearch(low: Int, high: Int): Option[Int] = {
-    //      val mid = (low + high) / 2
-    //      input(mid).compare(target) match {
-    //        case 1 => recursiveSearch(low, mid - 1)
-    //        case -1 => recursiveSearch(mid + 1, high)
-    //        case 0 => Some(mid)
-    //
-    //        case _ if high < low => None
-    //      }
-    //    }
-
+    
     recursiveSearch(0, input.length - 1)
   }
 

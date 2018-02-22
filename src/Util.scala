@@ -76,6 +76,12 @@ object Util {
     }
   }
 
+  def swap[A](array: Array[A], source: Int, dest: Int): Unit = {
+    val temp = array(source)
+    array(source) = array(dest)
+    array(dest) = temp
+  }
+
   def invertMap[A, B](inputMap: Map[A, B]): Map[B, List[A]] = {
     inputMap.foldLeft(Map[B, List[A]]()) {
       case (mapAccumulator, (value, key)) =>
