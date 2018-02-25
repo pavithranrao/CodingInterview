@@ -1,12 +1,11 @@
 import Util.Node
-import Util.Node._
 
 object MergeSortLinkedList {
 
-  def mergeSortedList(left: Option[Node], right: Option[Node])
-                     (implicit comparatorFn: (Int, Int) => Boolean): Option[Node] = {
+  def mergeSortedList[A](left: Option[Node[A]], right: Option[Node[A]])
+                        (implicit comparatorFn: (A, A) => Boolean): Option[Node[A]] = {
 
-    var head: Option[Node] = None
+    var head: Option[Node[A]] = None
     if (left.isEmpty) {
       right
     } else if (right.isEmpty) {
@@ -23,12 +22,12 @@ object MergeSortLinkedList {
     }
   }
 
-  def mergerSort(head: Option[Node])
-                (implicit comparatorFn: (Int, Int) => Boolean): Option[Node] = {
+  def mergerSort[A](head: Option[Node[A]])
+                   (implicit comparatorFn: (A, A) => Boolean): Option[Node[A]] = {
     if (head.isEmpty || head.get.next.isEmpty) {
       head
     } else {
-      val middleElement = getMiddleElement(head)
+      val middleElement = head.get.getMiddleElement
       // println(s"The middle element is ${middleElement.get.value}")
       val nextOfMiddle = middleElement.get.next
       middleElement.get.next = None
@@ -48,19 +47,20 @@ object MergeSortLinkedList {
     val n5 = Node(5)
     val n6 = Node(6)
 
-    push(n1, n4)
-    push(n1, n2)
-    push(n1, n6)
-    push(n1, n3)
-    push(n1, n5)
+    n1.push(n4)
+    n1.push(n2)
+    n1.push(n6)
+    n1.push(n3)
+    n1.push(n5)
+
 
     println("The given list is :")
-    printList(n1)
+    n1.printList()
     val comparatorFn = (a: Int, b: Int) => a < b
 
     println("The sorted list is :")
     val sortedList = mergerSort(Some(n1))(comparatorFn)
-    printList(sortedList.get)
+    sortedList.get.printList()
 
   }
 
