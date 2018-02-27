@@ -81,13 +81,25 @@ object Util {
     array(dest) = temp
   }
 
-  def invertMap[A, B](inputMap: Map[A, B]): Map[B, List[A]] = {
-    inputMap.foldLeft(Map[B, List[A]]()) {
+
+  type Matrix[A] = Array[Array[A]]
+
+  def printMatrix[A](matrix: Matrix[A]): Unit = {
+    for (row <- matrix.indices) {
+      for (col <- matrix.head.indices) {
+        print(s"${matrix(row)(col)}\t")
+      }
+      println()
+    }
+  }
+
+  def invertMap[A, B](inputMap: Map[A, B]): Map[B, Seq[A]] = {
+    inputMap.foldLeft(Map[B, Seq[A]]()) {
       case (mapAccumulator, (value, key)) =>
         if (mapAccumulator.contains(key)) {
           mapAccumulator.updated(key, mapAccumulator(key) :+ value)
         } else {
-          mapAccumulator.updated(key, List(value))
+          mapAccumulator.updated(key, Seq(value))
         }
     }
   }
