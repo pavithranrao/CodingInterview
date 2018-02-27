@@ -18,21 +18,22 @@ object CoinChangeDP {
         }
       }
     }
-    // println(s"C => ${C.mkString(", ")}")
-    // println(s"S => ${S.mkString(", ")}")
+     println(s"C => ${C.mkString(", ")}")
+     println(s"S => ${S.mkString(", ")}")
 
     @tailrec
-    def _recursive(newTarget: Int, answer: Array[Int]): Array[Int] = {
+    def getTrace(newTarget: Int = target,
+                 answer: Array[Int] = Array[Int]()): Array[Int] = {
       val coinIdx = S(newTarget)
       if (coinIdx == -1) {
         answer
       } else {
         val selected = coins(coinIdx)
-        _recursive(newTarget - selected, answer :+ selected)
+        getTrace(newTarget - selected, answer :+ selected)
       }
     }
 
-    _recursive(target, Array[Int]())
+    getTrace()
   }
 
   def main(args: Array[String]): Unit = {
@@ -43,6 +44,8 @@ object CoinChangeDP {
     val changes = getMinChange(coins, target)
     println(s"The minimum no of coins required is : ${changes.length}")
     println(s"The coins required are : ${changes.mkString(", ")}")
+
+    assert(changes.sum == target)
 
   }
 

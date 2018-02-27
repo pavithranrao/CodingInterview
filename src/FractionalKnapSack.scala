@@ -1,28 +1,42 @@
 object FractionalKnapSack {
+  type Item = (Float, Float)
 
-  def main(args: Array[String]): Unit = {
-    val items = Array[(Int, Int)]((50, 250), (100, 20), (40, 80), (300, 30), (50, 25))
-
-    val capacity = 150
-
+  def getKnapSack(items: Array[Item], capacity: Float): Array[Item] = {
     val sortedItems = items.map {
       x =>
-        val rate = x._2.toFloat / x._1.toFloat
-        (x._1, x._2, rate)
+        val valuePerUnit = x._2 / x._1
+        (x._1, x._2, valuePerUnit)
     }.sortWith(_._3 > _._3)
 
-    val finalValue = sortedItems.foldLeft((capacity, List[Int]())) {
-      case ((currentCapacity, acc), (weight, value, _)) =>
-        //        println(s"$currentCapacity -> $weight $value")
+    val finalValue = sortedItems.foldLeft((capacity, Array[Item]())) {
+      case ((currentCapacity, acc), (weight, _, valuePerUnit)) =>
         if (currentCapacity != 0) {
-          (currentCapacity - (weight min currentCapacity), acc :+ value)
+          val feasibleWeight = weight min currentCapacity
+          (currentCapacity - feasibleWeight,
+            acc :+ (feasibleWeight, feasibleWeight * valuePerUnit))
         } else {
           (currentCapacity, acc)
         }
     }._2
 
-    println(s"The maximum value of goods for capacity $capacity is : ${finalValue.sum}")
+    finalValue
+  }
 
+  def main(args: Array[String]): Unit = {
+    val items = Array((50f, 250f), (100f, 20f), (40f, 80f), (300f, 30f), (50f, 25f))
+    val capacity = 150f
+
+    val answer = getKnapSack(items, capacity)
+    val (capacityUsed, maxValue) = answer.foldLeft((0f, 0f)) {
+      case ((accCap, accVal), (currentCap, currentVal)) =>
+        (accCap + currentCap, accVal + currentVal)
+    }
+
+    println(s"The maximum value of goods for capacity $capacity is : $maxValue")
+    println(s"The capacity used is $capacityUsed out of $capacity")
+    println(s"The items are : ${answer.mkString(", ")}")
+
+    assert(capacityUsed == capacity)
   }
 
 }
