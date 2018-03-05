@@ -41,7 +41,7 @@ object StockNTransactions {
     }
 
     Util.printMatrix(C)
-    C(maxTransactions, length - 1)
+    C(maxTransactions)(length - 1)
 
   }
 
