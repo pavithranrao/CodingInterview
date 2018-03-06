@@ -3,6 +3,10 @@ import scala.reflect.ClassTag
 
 object Util {
 
+  // generate infinite cyclic stream of Seq[A]
+  def cyclicIterator[A](xs: Seq[A]): Iterator[A] =
+    Stream.continually(xs).flatten.iterator
+
   case class Node[A: ClassTag](value: A,
                                var next: Option[Node[A]] = None) {
 
@@ -95,12 +99,26 @@ object Util {
 
   def invertMap[A, B](inputMap: Map[A, B]): Map[B, Seq[A]] = {
     inputMap.foldLeft(Map[B, Seq[A]]()) {
-      case (mapAccumulator, (value, key)) =>
-        if (mapAccumulator.contains(key)) {
-          mapAccumulator.updated(key, mapAccumulator(key) :+ value)
+      case (mapAcc, (value, key)) =>
+        if (mapAcc.contains(key)) {
+          mapAcc.updated(key, mapAcc(key) :+ value)
         } else {
-          mapAccumulator.updated(key, Seq(value))
+          mapAcc.updated(key, Seq(value))
         }
     }
+  }
+
+  def shuffleArray[T](array: Array[T]): Unit = {
+    val rnd = new scala.util.Random
+    val length = array.length - 1
+    for (idx <- array.indices) {
+      val shuffleIdx = rnd.nextInt(length)
+      swap(array, idx, shuffleIdx)
+    }
+  }
+
+  def logNBaseB(n: Int, b: Int): Double = {
+    import math.log
+    log(n) / log(b)
   }
 }
