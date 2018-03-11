@@ -3,7 +3,7 @@ import scala.reflect.ClassTag
 object QuickSort {
 
 
-  def quickSort[A : ClassTag](array: Array[A], comparatorFn: (A, A) => Boolean): Array[A] = {
+  def quickSort[A: ClassTag](array: Array[A], comparatorFn: (A, A) => Boolean): Array[A] = {
     if (array.length <= 1) {
       array
     }
@@ -66,10 +66,10 @@ object QuickSort {
     val stringAnswer = genericQuickSort(0, stringArray.length - 1)(stringArray, stringComparatorFn)
     println(s"After Sort : ${stringAnswer.mkString(", ")}")
 
-    val fpArray= Array(1, 4, 6, 2, 7)
+    val fpArray = Array(1, 4, 6, 2, 7)
     val fpAnswer = quickSort(fpArray, comparatorFn)
 
-    assert(answer sameElements  fpAnswer)
+    assert(answer sameElements fpAnswer)
   }
 
 }

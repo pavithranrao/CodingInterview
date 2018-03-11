@@ -1,4 +1,5 @@
 import scala.annotation.tailrec
+import scala.collection.mutable
 import scala.reflect.ClassTag
 
 object Util {
@@ -6,6 +7,10 @@ object Util {
   // generate infinite cyclic stream of Seq[A]
   def cyclicIterator[A](xs: Seq[A]): Iterator[A] =
     Stream.continually(xs).flatten.iterator
+
+  def memoize[I, O](f: I => O): I => O = new mutable.HashMap[I, O]() {self =>
+    override def apply(key: I): O = self.synchronized(getOrElseUpdate(key, f(key)))
+  }
 
   case class Node[A: ClassTag](value: A,
                                var next: Option[Node[A]] = None) {
