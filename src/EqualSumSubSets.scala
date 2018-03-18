@@ -1,20 +1,6 @@
+import Util.dropFirstMatch
+
 object EqualSumSubSets {
-
-  // Courtesy : https://alvinalexander.com/scala/how-to-drop-filter-remove-first-matching-element-in-sequence-list
-  def dropFirstMatch[A](ls: Seq[A], value: A): Seq[A] = {
-
-    val index = ls.indexOf(value)
-    index.compare(0) match {
-      // index is -1 if there is no match
-      case -1 => ls
-      // if the element is at the beginning of the Seq
-      case 0 => ls.tail
-      // if the element is elsewhere
-      case _ =>
-        val (a, b) = ls.splitAt(index)
-        a ++ b.tail
-    }
-  }
 
   def getEqualSumSubSets(array: Array[Int]): Either[(Array[Int], Array[Int]), _] = {
     import DiscreteKnapSack.Item
@@ -26,13 +12,14 @@ object EqualSumSubSets {
     val partitionA = selectedItems.unzip._1
 
     if (filledCapacity == halfSum) {
-      val partitionB = partitionA.foldLeft(array.toSeq) {
-        case (acc, element) =>
-          dropFirstMatch(acc, element)
-      }.toArray
+      val partitionB = partitionA.foldLeft(array.toSeq)(dropFirstMatch).toArray
+      //      val partitionB = partitionA.foldLeft(array.toSeq) {
+      //        case (acc, element) =>
+      //          dropFirstMatch(acc, element)
+      //      }.toArray
       Left(partitionA, partitionB)
     } else {
-      Right(false)
+      Right(None)
     }
 
   }

@@ -4,11 +4,28 @@ import scala.reflect.ClassTag
 
 object Util {
 
+  // Courtesy : https://alvinalexander.com/scala/how-to-drop-filter-remove-first-matching-element-in-sequence-list
+  def dropFirstMatch[A](ls: Seq[A], value: A): Seq[A] = {
+
+    val index = ls.indexOf(value)
+    index.compare(0) match {
+      // index is -1 if there is no match
+      case -1 => ls
+      // if the element is at the beginning of the Seq
+      case 0 => ls.tail
+      // if the element is found elsewhere
+      case _ =>
+        val (a, b) = ls.splitAt(index)
+        a ++ b.tail
+    }
+  }
+
   // generate infinite cyclic stream of Seq[A]
   def cyclicIterator[A](xs: Seq[A]): Iterator[A] =
     Stream.continually(xs).flatten.iterator
 
-  def memoize[I, O](f: I => O): I => O = new mutable.HashMap[I, O]() {self =>
+  def memoize[I, O](f: I => O): I => O = new mutable.HashMap[I, O]() {
+    self =>
     override def apply(key: I): O = self.synchronized(getOrElseUpdate(key, f(key)))
   }
 
