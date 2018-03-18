@@ -26,10 +26,10 @@ object EqualSumSubSets {
     val partitionA = selectedItems.unzip._1
 
     if (filledCapacity == halfSum) {
-      val partitionB = partitionA.foldLeft(array) {
+      val partitionB = partitionA.foldLeft(array.toSeq) {
         case (acc, element) =>
-          dropFirstMatch(acc, element).toArray
-      }
+          dropFirstMatch(acc, element)
+      }.toArray
       Left(partitionA, partitionB)
     } else {
       Right(false)
