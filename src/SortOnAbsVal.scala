@@ -1,24 +1,22 @@
 import Util.Node
-import Util.Node._
 
 object SortOnAbsVal {
 
-  def sortList(head: Node): Option[Node] = {
-    var answer: Option[Node] = None
-    var current: Option[Node] = Some(head.copy())
+  def sortList(head: Node[Int]): Option[Node[Int]] = {
+    var answer: Option[Node[Int]] = None
+    var current: Option[Node[Int]] = Some(head.copy())
 
     while (current.isDefined) {
-      val present = copyNode(current.get)
+      val present = current.get.copyNode()
       if (present.value >= 0) {
         if (answer.isDefined) {
-          push(answer.get, present)
-          // implies => push(answer.get, present, isSingleNode = true)
+          answer.get.push(present)
         } else {
           answer = Some(present)
         }
       } else {
         if (answer.isDefined) {
-          push(present, answer.get, isSingleNode = false)
+          present.push(answer.get)
           answer = Some(present.copy())
         } else {
           answer = Some(present)
@@ -38,16 +36,17 @@ object SortOnAbsVal {
     val n4 = Node(4)
     val n5 = Node(-5)
 
-    push(n1, n2)
-    push(n1, n3)
-    push(n1, n4)
-    push(n1, n5)
+    n1.push(n2)
+    n1.push(n3)
+    n1.push(n4)
+    n1.push(n5)
+
     println("The given sorted on abs value list is : ")
-    printList(n1)
+    n1.printList()
 
     val answer = sortList(n1)
     println("The sorted list is :")
-    printList(answer.get)
+    answer.get.printList()
 
   }
 

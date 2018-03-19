@@ -1,29 +1,28 @@
 import Util.Node
-import Util.Node._
 
 // Need to improve this later
 
 object SortAlternatingList {
 
-  def splitList(head: Node): (Option[Node], Option[Node]) = {
-    var current: Option[Node] = Some(head)
-    var slowPtr: Option[Node] = None
-    var fastPtr: Option[Node] = None
+  def splitList(head: Node[Int]): (Option[Node[Int]], Option[Node[Int]]) = {
+    var current: Option[Node[Int]] = Some(head)
+    var slowPtr: Option[Node[Int]] = None
+    var fastPtr: Option[Node[Int]] = None
 
     while (current.isDefined) {
       val present = current.get
-      val presentNode = copyNode(present)
+      val presentNode = present.copyNode()
       if (slowPtr.isEmpty) {
         slowPtr = Some(presentNode)
       } else {
-        push(slowPtr.get, presentNode)
+        slowPtr.get.push(presentNode)
       }
       if (present.next.isDefined) {
-        val presentNode = copyNode(present.next.get)
+        val presentNode = present.next.get.copyNode()
         if (fastPtr.isEmpty) {
           fastPtr = Some(presentNode)
         } else {
-          push(fastPtr.get, presentNode)
+          fastPtr.get.push(presentNode)
         }
       }
       if (present.next.isEmpty) {
@@ -49,28 +48,28 @@ object SortAlternatingList {
     val n12 = Node(12)
     val n89 = Node(89)
 
-    push(n10, n40)
-    push(n10, n53)
-    push(n10, n30)
-    push(n10, n67)
-    push(n10, n12)
-    push(n10, n89)
+    n10.push(n40)
+    n10.push(n53)
+    n10.push(n30)
+    n10.push(n67)
+    n10.push(n12)
+    n10.push(n89)
 
     println("The given list is :")
-    printList(n10)
+    n10.printList()
 
     val (left, right) = splitList(n10)
     println(s"The left list is : ")
-    printList(left.get)
+    left.get.printList()
     println(s"The right list is : ")
-    printList(right.get)
+    right.get.printList()
 
-    val rightSort = Some(reverse(right.get))
+    val rightSort = Some(right.get.reverse())
     val comparatorFn = (a: Int, b: Int) => a < b
     val answer = MergeSortLinkedList.mergeSortedList(left, rightSort)(comparatorFn)
 
     println(s"The sorted list is : ")
-    printList(answer.get)
+    answer.get.printList()
   }
 
 }

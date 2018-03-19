@@ -6,10 +6,7 @@ object RomanNumeral {
     "C" -> 100, "CD" -> 400, "D" -> 500, "CM" -> 900,
     "M" -> 1000)
 
-  val numberRoman: Map[Int, String] = romanNumeral.map {
-    case (key, value) =>
-      value -> key
-  }
+  val numberRoman: Map[Int, String] = romanNumeral.map(_.swap)
 
   val dividers: Array[Int] = numberRoman.keys.toArray.sortWith(_ > _)
 
