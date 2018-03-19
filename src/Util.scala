@@ -20,6 +20,14 @@ object Util {
     }
   }
 
+  // Removes items present in Seq `xs` from Seq `ls`
+  // Similar to set difference, but Seq can have duplicates,
+  // hence removes the first occurrence of each element from `xs`
+  // using dropFirstMatch function.
+  def seqDifference[A](ls: Seq[A], xs: Seq[A]): Seq[A] = {
+    xs.foldLeft(ls)(dropFirstMatch)
+  }
+
   // generate infinite cyclic stream of Seq[A]
   def cyclicIterator[A](xs: Seq[A]): Iterator[A] =
     Stream.continually(xs).flatten.iterator
