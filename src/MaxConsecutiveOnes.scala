@@ -5,8 +5,8 @@ object MaxConsecutiveOnes {
     nums.foldLeft((0, 0)) {
       case ((maxUpToHere, maxSoFar), present) =>
         if (present == 1) {
-          val newMax = maxUpToHere + 1
-          (newMax, newMax max maxSoFar)
+          val maxEndingHere = maxUpToHere + 1
+          (maxEndingHere, maxEndingHere max maxSoFar)
         } else {
           (0, maxSoFar)
         }

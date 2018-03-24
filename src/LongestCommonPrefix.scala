@@ -3,7 +3,7 @@ object LongestCommonPrefix {
   def getCommonChars(left: String, right: String): String =
   // takeWhile example
     left.zip(right).takeWhile {
-      x => x._1 == x._2
+      case (x, y) => x == y
     }.unzip._1.mkString("")
 
   //    left.zip(right).foldLeft(("", true)) {
