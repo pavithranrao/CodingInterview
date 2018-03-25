@@ -25,10 +25,10 @@ object TwoWayPartition {
     val array = Array(1, 11, 2, 12, 3, 13, 4, 14, 5, 15)
     println(s"The given array is : ${array.mkString(", ")}")
 
-    //     val pivot = 10
-    //     val partitionFn = (a: Int) => a < pivot
+    // val pivot = 10
+    // val partitionFn = (a: Int) => a < pivot
 
-    //     Partition array into even and odd elements
+    // Partition array into even and odd elements
     val partitionFn = (a: Int) => a % 2 == 0
 
     twoWayPartition(array, partitionFn)
