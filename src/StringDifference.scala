@@ -1,10 +1,10 @@
 object StringDifference {
 
   def findTheDifference(s: String, t: String): Char = {
-    s.zip(t).foldLeft(t.last) {
+    s.zip(t).foldLeft(t.last.toInt) {
       case (acc, (a, b)) =>
-        (acc ^ a ^ b).toChar
-    }
+        acc ^ a ^ b
+    }.toChar
   }
 
 
