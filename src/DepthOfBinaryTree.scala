@@ -1,4 +1,4 @@
-object MaxDepth {
+object DepthOfBinaryTree {
 
   // Definition for a binary tree node.
   class TreeNode(var _value: Int) {
@@ -15,6 +15,20 @@ object MaxDepth {
     }
   }
 
+  def minDepth(root: TreeNode): Int = {
+    if (root == null) {
+      0
+    } else {
+      val left = minDepth(root.left)
+      val right = minDepth(root.right)
+      if (left == 0 || right == 0) {
+        left + right + 1
+      } else {
+        (left min right) + 1
+      }
+    }
+
+  }
 
   def main(args: Array[String]): Unit = {
     val node1 = new TreeNode(1)
@@ -36,6 +50,8 @@ object MaxDepth {
 
     val answer = maxDepth(node5)
     println(answer)
+
+    println(minDepth(node5))
 
   }
 
