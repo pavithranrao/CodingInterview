@@ -20,7 +20,6 @@ object WaveForm {
 
     generateWave(input = input)
     println(s"The given array in wave form is : ${input.mkString(", ")}")
-
   }
 
 }
