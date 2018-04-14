@@ -151,4 +151,12 @@ object Util {
     import math.log
     log(n) / log(b)
   }
+
+  // returns the frequency of each element in the Sequence
+  def getFreqMap[A](input: Seq[A]): Map[A, Int] = {
+    input.foldLeft(Map[A, Int]()) {
+      case (acc, present) =>
+        acc.updated(present, acc.getOrElse(present, 0) + 1)
+    }
+  }
 }
