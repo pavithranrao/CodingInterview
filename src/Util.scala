@@ -118,14 +118,18 @@ object Util {
 
   type Matrix[A] = Array[Array[A]]
 
-  def printMatrix[A](matrix: Matrix[A]): Unit = {
+  def printMatrix[A](matrix: Matrix[A], separator: String = "\t"): Unit = {
     for (row <- matrix.indices) {
       for (col <- matrix.head.indices) {
-        print(s"${matrix(row)(col)}\t")
+        print(s"${matrix(row)(col)}$separator")
       }
       println()
     }
   }
+
+  //  def printMatrix[T](matrix: Matrix[T], separator: String = "\t"): Unit = {
+  //    println(matrix.map(_.mkString(separator)).mkString("\n"))
+  //  }
 
   def invertMap[A, B](inputMap: Map[A, B]): Map[B, Seq[A]] = {
     inputMap.foldLeft(Map[B, Seq[A]]()) {
