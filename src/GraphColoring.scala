@@ -59,7 +59,7 @@ object GraphColoring {
     if (isColorAble) {
       Left(color)
     } else {
-      Right(false)
+      Right(isColorAble)
     }
   }
 
