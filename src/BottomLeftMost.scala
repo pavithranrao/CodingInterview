@@ -20,15 +20,15 @@ object BottomLeftMost {
         vertices.foreach(visitedSet.add)
         val fringe = vertices
           .flatMap { vertex => List(vertex.left, vertex.right) }
-          .filter(child => child != null && !visitedSet.contains(child))
+          .filter { child => child != null && !visitedSet.contains(child) }
 
         if (fringe.isEmpty)
           visited
         else
-          bfs_helper(fringe, fringe :: visited)
+          bfs_helper(fringe, visited :+ fringe)
       }
 
-      bfs_helper(List(start), List(List(start))).reverse
+      bfs_helper(List(start), List(List(start)))
     }
 
     bfs(root).last.head.value
