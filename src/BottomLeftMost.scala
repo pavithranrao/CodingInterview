@@ -20,7 +20,7 @@ object BottomLeftMost {
         vertices.foreach(visitedSet.add)
         val fringe = vertices
           .flatMap { vertex => List(vertex.left, vertex.right) }
-          .filter { child => child != null && !visitedSet.contains(child) }
+          .filterNot { child => child == null || visitedSet.contains(child) }
 
         if (fringe.isEmpty)
           visited
