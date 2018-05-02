@@ -17,7 +17,6 @@ object SumCloseToZero {
     } else {
       println("The pair with sum closest to zero does not exists")
     }
-
   }
 
   def getClosestSumToZero(array: Array[Int]): Option[(Int, Int, Int)] = {
@@ -25,7 +24,6 @@ object SumCloseToZero {
     if (array.length < 2) {
       None
     } else {
-
       @tailrec
       def _recursive(left: Int, right: Int)
                     (param: (Int, Int, Int)): Option[(Int, Int, Int)] = {
@@ -51,7 +49,6 @@ object SumCloseToZero {
       val left = 0
       val right = array.length - 1
       _recursive(left, right)((Int.MaxValue, array(left), array(right)))
-
     }
   }
 
