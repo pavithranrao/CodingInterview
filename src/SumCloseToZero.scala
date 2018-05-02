@@ -1,34 +1,6 @@
+import scala.annotation.tailrec
+
 object SumCloseToZero {
-
-  def getClosestSumToZero(array: Array[Int]): Option[(Int, Int, Int)] = {
-
-    if (array.length < 2) {
-      None
-    }
-
-    var left = 0
-    var leftVal = array(left)
-    var right = array.length - 1
-    var rightVal = array(right)
-    var absMin = Int.MaxValue
-
-    while (left < right) {
-      val newMin = array(right) + array(left)
-      if (math.abs(newMin) < absMin) {
-        leftVal = array(left)
-        rightVal = array(right)
-        absMin = newMin
-      }
-
-      newMin.compare(0) match {
-        case 0 => left = right
-        case 1 => right -= 1
-        case -1 => left += 1
-      }
-    }
-
-    Some(leftVal, rightVal, absMin)
-  }
 
   def main(args: Array[String]): Unit = {
     val array = Array(1, 60, -10, 70, -80, 85)
@@ -39,13 +11,48 @@ object SumCloseToZero {
 
     val answer = getClosestSumToZero(array)
     if (answer.isDefined) {
-      val (left, right, sum) = answer.get
+      val (sum, left, right) = answer.get
       println(s"The pair with sum closest to zero is : $left and $right " +
         s"and the sum is $sum")
     } else {
       println("The pair with sum closest to zero does not exists")
     }
 
+  }
+
+  def getClosestSumToZero(array: Array[Int]): Option[(Int, Int, Int)] = {
+
+    if (array.length < 2) {
+      None
+    } else {
+
+      @tailrec
+      def _recursive(left: Int, right: Int)
+                    (param: (Int, Int, Int)): Option[(Int, Int, Int)] = {
+        if (left < right) {
+          val (absMin, leftVal, rightVal) = param
+          val newMin = array(right) + array(left)
+          val newParam =
+            if (math.abs(newMin) < absMin) {
+              (newMin, array(left), array(right))
+            } else {
+              (absMin, leftVal, rightVal)
+            }
+          newMin.compare(0) match {
+            case 0 => Some(newParam)
+            case 1 => _recursive(left, right - 1)(newParam)
+            case -1 => _recursive(left + 1, right)(newParam)
+          }
+        } else {
+          Some(param)
+        }
+      }
+
+      val left = 0
+      val right = array.length - 1
+      _recursive(left, right)((Int.MaxValue, array(left), array(right)))
+
+    }
   }
 
 }
