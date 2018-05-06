@@ -1,5 +1,4 @@
 import scala.annotation.tailrec
-import scala.collection.mutable
 
 object ZigZagBTree {
 
@@ -31,12 +30,10 @@ object ZigZagBTree {
   }
 
   def bfs(start: TreeNode): List[List[TreeNode]] = {
-    val visitedSet = mutable.Set[TreeNode]()
-
     @tailrec
     def bfs_helper(vertices: List[TreeNode],
-                   visited: List[List[TreeNode]]): List[List[TreeNode]] = {
-      vertices.foreach(visitedSet.add)
+                   visited: List[List[TreeNode]],
+                   visitedSet: Set[TreeNode] = Set[TreeNode]()): List[List[TreeNode]] = {
       val fringe = vertices
         .flatMap { vertex => List(vertex.left, vertex.right) }
         .filterNot { child => child == null || visitedSet.contains(child) }
@@ -44,7 +41,7 @@ object ZigZagBTree {
       if (fringe.isEmpty) {
         visited
       } else {
-        bfs_helper(fringe, visited :+ fringe)
+        bfs_helper(fringe, visited :+ fringe, visitedSet ++ fringe)
       }
     }
 

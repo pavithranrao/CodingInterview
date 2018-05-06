@@ -48,7 +48,7 @@ object SumCloseToZero {
 
       val left = 0
       val right = array.length - 1
-      _recursive(left, right)((Int.MaxValue, array(left), array(right)))
+      _recursive(left, right)(Int.MaxValue, array(left), array(right))
     }
   }
 
