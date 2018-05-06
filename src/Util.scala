@@ -4,6 +4,16 @@ import scala.reflect.ClassTag
 
 object Util {
 
+  type Matrix[A] = Array[Array[A]]
+
+  // Removes items present in Seq `xs` from Seq `ls`
+  // Similar to set difference, but Seq can have duplicates,
+  // hence removes the first occurrence of each element from `xs`
+  // using dropFirstMatch function.
+  def seqDifference[A](ls: Seq[A], xs: Seq[A]): Seq[A] = {
+    xs.foldLeft(ls)(dropFirstMatch)
+  }
+
   // Courtesy : https://alvinalexander.com/scala/how-to-drop-filter-remove-first-matching-element-in-sequence-list
   def dropFirstMatch[A](ls: Seq[A], value: A): Seq[A] = {
 
@@ -20,14 +30,6 @@ object Util {
     }
   }
 
-  // Removes items present in Seq `xs` from Seq `ls`
-  // Similar to set difference, but Seq can have duplicates,
-  // hence removes the first occurrence of each element from `xs`
-  // using dropFirstMatch function.
-  def seqDifference[A](ls: Seq[A], xs: Seq[A]): Seq[A] = {
-    xs.foldLeft(ls)(dropFirstMatch)
-  }
-
   // generate infinite cyclic stream of Seq[A]
   def cyclicIterator[A](xs: Seq[A]): Iterator[A] =
     Stream.continually(xs).flatten.iterator
@@ -36,6 +38,66 @@ object Util {
     self =>
     override def apply(key: I): O = self.synchronized(getOrElseUpdate(key, f(key)))
   }
+
+  def printMatrix[A](matrix: Matrix[A], separator: String = "\t"): Unit = {
+    for (row <- matrix.indices) {
+      for (col <- matrix.head.indices) {
+        print(s"${matrix(row)(col)}$separator")
+      }
+      println()
+    }
+  }
+
+  def invertMap[A, B](inputMap: Map[A, B]): Map[B, Seq[A]] = {
+    inputMap.foldLeft(Map[B, Seq[A]]()) {
+      case (mapAcc, (value, key)) =>
+        if (mapAcc.contains(key)) {
+          mapAcc.updated(key, mapAcc(key) :+ value)
+        } else {
+          mapAcc.updated(key, Seq(value))
+        }
+    }
+  }
+
+  def shuffleArray[T](array: Array[T]): Unit = {
+    val rnd = new scala.util.Random
+    val length = array.length - 1
+    for (idx <- array.indices) {
+      val shuffleIdx = rnd.nextInt(length)
+      swap(array, idx, shuffleIdx)
+    }
+  }
+
+  def swap[A](array: Array[A], source: Int, dest: Int): Unit = {
+    val temp = array(source)
+    array(source) = array(dest)
+    array(dest) = temp
+  }
+
+  //  def printMatrix[T](matrix: Matrix[T], separator: String = "\t"): Unit = {
+  //    println(matrix.map(_.mkString(separator)).mkString("\n"))
+  //  }
+
+  def logNBaseB(n: Int, b: Int): Double = {
+    import math.log
+    log(n) / log(b)
+  }
+
+  // returns the frequency of each element in the Sequence
+  def getFreqMap[A](input: Seq[A]): Map[A, Int] = {
+    input.foldLeft(Map[A, Int]()) {
+      case (acc, present) =>
+        acc.updated(present, acc.getOrElse(present, 0) + 1)
+    }
+  }
+
+
+  // returns average of a Seq[Int]
+  def average(seq: Seq[Int]): Double =
+    seq.foldLeft((0.0, 1)) {
+      case ((avg, count), present) =>
+        (avg + (present - avg) / count, count + 1)
+    }._1
 
   case class Node[A: ClassTag](value: A,
                                var next: Option[Node[A]] = None) {
@@ -103,64 +165,9 @@ object Util {
     }
   }
 
-
   // generic TreeNode with A as value
   case class TreeNode[A: ClassTag](value: A,
                                    var left: Option[TreeNode[A]] = None,
                                    var right: Option[TreeNode[A]] = None)
 
-  def swap[A](array: Array[A], source: Int, dest: Int): Unit = {
-    val temp = array(source)
-    array(source) = array(dest)
-    array(dest) = temp
-  }
-
-
-  type Matrix[A] = Array[Array[A]]
-
-  def printMatrix[A](matrix: Matrix[A], separator: String = "\t"): Unit = {
-    for (row <- matrix.indices) {
-      for (col <- matrix.head.indices) {
-        print(s"${matrix(row)(col)}$separator")
-      }
-      println()
-    }
-  }
-
-  //  def printMatrix[T](matrix: Matrix[T], separator: String = "\t"): Unit = {
-  //    println(matrix.map(_.mkString(separator)).mkString("\n"))
-  //  }
-
-  def invertMap[A, B](inputMap: Map[A, B]): Map[B, Seq[A]] = {
-    inputMap.foldLeft(Map[B, Seq[A]]()) {
-      case (mapAcc, (value, key)) =>
-        if (mapAcc.contains(key)) {
-          mapAcc.updated(key, mapAcc(key) :+ value)
-        } else {
-          mapAcc.updated(key, Seq(value))
-        }
-    }
-  }
-
-  def shuffleArray[T](array: Array[T]): Unit = {
-    val rnd = new scala.util.Random
-    val length = array.length - 1
-    for (idx <- array.indices) {
-      val shuffleIdx = rnd.nextInt(length)
-      swap(array, idx, shuffleIdx)
-    }
-  }
-
-  def logNBaseB(n: Int, b: Int): Double = {
-    import math.log
-    log(n) / log(b)
-  }
-
-  // returns the frequency of each element in the Sequence
-  def getFreqMap[A](input: Seq[A]): Map[A, Int] = {
-    input.foldLeft(Map[A, Int]()) {
-      case (acc, present) =>
-        acc.updated(present, acc.getOrElse(present, 0) + 1)
-    }
-  }
 }
