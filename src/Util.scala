@@ -99,6 +99,13 @@ object Util {
         (avg + (present - avg) / count, count + 1)
     }._1
 
+  // similar to Spark RDD keyBy function
+  def keyBy[A, B](seq: Seq[A], fn: (A) => B): Map[B, A] =
+    seq.foldLeft(Map[B, A]()) {
+      case (acc, present) =>
+        acc.updated(fn(present), present)
+    }
+
   case class Node[A: ClassTag](value: A,
                                var next: Option[Node[A]] = None) {
 
