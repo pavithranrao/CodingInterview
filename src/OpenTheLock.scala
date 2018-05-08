@@ -52,11 +52,11 @@ object OpenTheLock {
 
       @tailrec
       def _bfs(vertices: Array[String],
-               count: Int = 0,
-               visitedSet: Set[String] = deadends.toSet): Int = {
+               visitedSet: Set[String] = deadends.toSet,
+               count: Int = 0): Int = {
         val fringe = vertices
           .flatMap(getChildren).distinct
-          .filterNot { child => visitedSet.contains(child) }
+          .filterNot(visitedSet.contains)
 
         if (fringe.isEmpty) {
           -1
@@ -64,7 +64,7 @@ object OpenTheLock {
           if (fringe.contains(target)) {
             count + 1
           } else {
-            _bfs(fringe, count + 1, visitedSet ++ fringe)
+            _bfs(fringe, visitedSet ++ fringe, count + 1)
           }
         }
       }
