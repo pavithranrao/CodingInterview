@@ -42,11 +42,13 @@ object TwoSumLeetCode {
     def _bsHash(idx: Int = 0,
                 numHash: Map[Int, Int] = Map[Int, Int]()): Array[Int] = {
 
-      if (numHash.contains(target - input(idx))) {
-        Array(idx, numHash(target - input(idx)))
+      val present = input(idx)
+      val complement = target - present
+      if (numHash.contains(complement)) {
+        Array(idx, numHash(complement))
       } else {
         _bsHash(idx + 1,
-          numHash.updated(input(idx), idx))
+          numHash.updated(present, idx))
       }
 
     }
