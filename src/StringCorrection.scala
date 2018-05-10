@@ -51,8 +51,7 @@ object StringCorrection {
 
     ansBuffer.reverse + ansAcc.reverse
   }
-
-
+  
   def getCorrectedString2(input: String, length: Int): String = {
     val (ansAcc, ansBuffer) = input.foldRight((List[String](), "")) {
       case (present, (acc, buffer)) =>
