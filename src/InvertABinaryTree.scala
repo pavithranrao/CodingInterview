@@ -39,8 +39,8 @@ object InvertABinaryTree {
 
       node.left = node.right
       node.right = temp
-      invertTree(node.left)
-      invertTree(node.right)
+      invertTree2(node.left)
+      invertTree2(node.right)
 
       // return the root with inverted subtrees
       node
