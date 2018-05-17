@@ -6,6 +6,10 @@ object InvertABinaryTree {
     root.right = TreeNode(3)
 
     invertTree(root)
+    assert(root.left.value == 3)
+    invertTree2(root)
+    assert(root.left.value == 2)
+
   }
 
   def invertTree(node: TreeNode): TreeNode = {
@@ -35,10 +39,11 @@ object InvertABinaryTree {
       //   return the same node
       node
     } else {
+      // swap left and right
       val temp = node.left
-
       node.left = node.right
       node.right = temp
+
       invertTree2(node.left)
       invertTree2(node.right)
 
