@@ -2,7 +2,34 @@ import Util.Matrix
 
 object GraphColoring {
 
-  case class Graph(numVertices: Int, adjMatrix: Matrix[Int])
+  def main(args: Array[String]): Unit = {
+    val adjMatrix = Array(
+      Array(0, 1, 0, 1),
+      Array(1, 0, 0, 1),
+      Array(1, 0, 0, 1),
+      Array(0, 1, 1, 0))
+
+    val graph = Graph(adjMatrix.length, adjMatrix)
+    val answer = graphColor(graph, 2)
+
+    answer match {
+      case Left(color) =>
+        println(s"The graph is color able and the colors are : ${color.mkString(", ")}")
+      case _ =>
+        println(s"The graph is not color able")
+    }
+
+    // negative test case
+    // this cannot be colored by 2 colors
+    val invalidAdjMatrix = Array(
+      Array(0, 1, 0, 1),
+      Array(1, 0, 0, 1),
+      Array(1, 0, 0, 1),
+      Array(1, 1, 1, 0))
+
+    val invalidGraph = Graph(invalidAdjMatrix.length, invalidAdjMatrix)
+    assert(graphColor(invalidGraph, 2).isRight)
+  }
 
   def graphColor(graph: Graph, m: Int): Either[Array[Int], Boolean] = {
     // init : mark all vertices to have no color
@@ -26,6 +53,7 @@ object GraphColoring {
             // if connected check if the color of source and dest are not same
             color(dest) != sourceColor
           }
+        // === graph.adjMatrix(source)(dest) == 0 || color(dest) != sourceColor
       }
     }
 
@@ -63,34 +91,6 @@ object GraphColoring {
     }
   }
 
-
-  def main(args: Array[String]): Unit = {
-    val adjMatrix = Array(
-      Array(0, 1, 0, 1),
-      Array(1, 0, 0, 1),
-      Array(1, 0, 0, 1),
-      Array(0, 1, 1, 0))
-
-    val graph = Graph(adjMatrix.length, adjMatrix)
-    val answer = graphColor(graph, 2)
-
-    answer match {
-      case Left(color) =>
-        println(s"The graph is color able and the colors are : ${color.mkString(", ")}")
-      case _ =>
-        println(s"The graph is not color able")
-    }
-
-    // negative test case
-    // this cannot be colored by 2 colors
-    val invalidAdjMatrix = Array(
-      Array(0, 1, 0, 1),
-      Array(1, 0, 0, 1),
-      Array(1, 0, 0, 1),
-      Array(1, 1, 1, 0))
-
-    val invalidGraph = Graph(invalidAdjMatrix.length, invalidAdjMatrix)
-    assert(graphColor(invalidGraph, 2).isRight)
-  }
+  case class Graph(numVertices: Int, adjMatrix: Matrix[Int])
 
 }
