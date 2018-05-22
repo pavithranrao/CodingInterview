@@ -19,6 +19,6 @@ object MissingNumber {
   // slower
   // two iterations
   def missingNumber2(nums: Array[Int]): Int =
-    nums.length * (nums.length + 1) / 2 - nums.sum
+    (nums.length * (nums.length + 1)) / 2 - nums.sum
 
 }
