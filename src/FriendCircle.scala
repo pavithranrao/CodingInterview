@@ -44,7 +44,6 @@ object FriendCircle {
       //    if (parent(person) == person) {
       //      person
       //    } else {
-      //      // path compression
       //      findParent(parent(person))
       //    }
       //  }
