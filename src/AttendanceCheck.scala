@@ -31,11 +31,11 @@ object AttendanceCheck {
             if (absentBefore) {
               false
             } else {
-              // else strike 1
+              // else strike ONE
               check(idx + 1, absentBefore = true)
             }
           case _ =>
-            // if last consecutively for 3 days, false
+            // if late consecutively for 3 days, false
             if (idx >= 2 && s(idx - 1) == 'L' && s(idx - 2) == 'L') {
               false
             } else {
