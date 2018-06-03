@@ -9,20 +9,20 @@ object LCIS {
   // modified Kadanes' Algorithm
   def findLengthOfLCIS(array: Array[Int]): Int = {
     if (array.length > 1) {
-      array.tail.foldLeft((1, 1, array.head)) {
-        case ((maxUpToHere, maxSoFar, prev), present) =>
+      (1 until array.length).foldLeft((1, 1)) {
+        case ((maxUpToHere, maxSoFar), idx) =>
           // if present is greater than prev
           //    maxEndingHere is increased by 1
           // else
           //    maxEndingHere is reset to 1
           val maxEndingHere =
-            if (present > prev) {
+            if (array(idx) > array(idx - 1)) {
               maxUpToHere + 1
             } else {
               1
             }
           // maxSoFar is the max of maxEndingHere and maxSoFar
-          (maxEndingHere, maxEndingHere max maxSoFar, present)
+          (maxEndingHere, maxEndingHere max maxSoFar)
       }._2
     } else {
       array.length
