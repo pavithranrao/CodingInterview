@@ -12,25 +12,26 @@ object FloodFill {
     println()
 
     val negImage = Array(Array(0, 0, 0), Array(0, 0, 0), Array(0, 0, 0))
-    val negAnswer = floodFill(negImage, 0, 0, 2)
+    val negAnswer = floodFill(negImage, sr = 0, sc = 0, newColor)
     Util.printMatrix(negAnswer)
 
   }
 
+  // beats 80%
   def floodFill(image: Array[Array[Int]], sr: Int, sc: Int, newColor: Int): Array[Array[Int]] = {
 
     val m = image.length
     val n = image.head.length
+    val startColor = image(sr)(sc)
 
-    def dfs(row: Int = sr, col: Int = sc,
-            startColor : Int = image(sr)(sc)): Unit = {
+    def dfs(row: Int = sr, col: Int = sc): Unit = {
       if (!(row < 0 || row >= m || col < 0 || col >= n ||
         image(row)(col) != startColor || image(row)(col) == newColor)) {
         image(row)(col) = newColor
-        dfs(row - 1, col, startColor)
-        dfs(row + 1, col, startColor)
-        dfs(row, col - 1, startColor)
-        dfs(row, col + 1, startColor)
+        dfs(row - 1, col)
+        dfs(row + 1, col)
+        dfs(row, col - 1)
+        dfs(row, col + 1)
       }
     }
 
