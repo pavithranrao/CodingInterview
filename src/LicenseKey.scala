@@ -1,4 +1,4 @@
-object StringCorrection {
+object LicenseKey {
 
   def main(args: Array[String]): Unit = {
     val input = "--a-a-a-a--"
