@@ -18,15 +18,16 @@ object FloodFill {
   }
 
   // beats 80%
-  def floodFill(image: Array[Array[Int]], sr: Int, sc: Int, newColor: Int): Array[Array[Int]] = {
+  def floodFill(image: Array[Array[Int]],
+                sr: Int, sc: Int, newColor: Int): Array[Array[Int]] = {
 
     val m = image.length
     val n = image.head.length
-    val startColor = image(sr)(sc)
+    val oldColor = image(sr)(sc)
 
     def dfs(row: Int = sr, col: Int = sc): Unit = {
       if (!(row < 0 || row >= m || col < 0 || col >= n ||
-        image(row)(col) != startColor || image(row)(col) == newColor)) {
+        image(row)(col) != oldColor || image(row)(col) == newColor)) {
         image(row)(col) = newColor
         dfs(row - 1, col)
         dfs(row + 1, col)
