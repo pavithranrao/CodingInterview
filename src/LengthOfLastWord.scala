@@ -8,6 +8,7 @@ object LengthOfLastWord {
     assert(lengthOfLastWord(" ") == 0)
     assert(lengthOfLastWord("a") == 1)
     assert(lengthOfLastWord("a ") == 1)
+    assert(lengthOfLastWord("") == 0)
   }
 
   // beats 87%
@@ -29,10 +30,7 @@ object LengthOfLastWord {
       }
     }
 
-    if (len > 0)
-      helper()
-    else
-      0
+    helper()
   }
 
 
