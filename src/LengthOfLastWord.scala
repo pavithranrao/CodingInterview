@@ -4,10 +4,10 @@ object LengthOfLastWord {
 
   def main(args: Array[String]): Unit = {
     val s = "abc def"
-    println(lengthOfLastWord(s) == 3)
-    println(lengthOfLastWord(" ") == 0)
-    println(lengthOfLastWord("a") == 1)
-    println(lengthOfLastWord("a ") == 1)
+    assert(lengthOfLastWord(s) == 3)
+    assert(lengthOfLastWord(" ") == 0)
+    assert(lengthOfLastWord("a") == 1)
+    assert(lengthOfLastWord("a ") == 1)
   }
 
   // beats 87%
