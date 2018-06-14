@@ -24,14 +24,13 @@ object LengthOfLastWord {
       } else {
         (s(idx), sawChar) match {
           case (' ', true) => lengthOfLast
-          case (' ', false) => helper(idx - 1)(sawChar)
-          case (_, _) => helper(idx - 1, lengthOfLast + 1)(sawChar = true)
+          case (' ', false) => helper(idx - 1)
+          case _ => helper(idx - 1, lengthOfLast + 1)(sawChar = true)
         }
       }
     }
 
     helper()
   }
-
 
 }
