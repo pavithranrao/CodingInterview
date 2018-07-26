@@ -10,7 +10,7 @@ object AverageOfLevels {
     val answer = averageOfLevels(root)
     println(answer.mkString(", "))
   }
-  
+
   def averageOfLevels(root: TreeNode): Array[Double] = {
     if (root != null) {
       bfs(root).map {
@@ -25,16 +25,15 @@ object AverageOfLevels {
   def bfs(start: TreeNode): List[List[TreeNode]] = {
     @tailrec
     def bfs_helper(vertices: List[TreeNode],
-                   visited: List[List[TreeNode]],
-                   visitedSet: Set[TreeNode] = Set[TreeNode]()): List[List[TreeNode]] = {
+                   visited: List[List[TreeNode]]): List[List[TreeNode]] = {
       val fringe = vertices
         .flatMap { vertex => List(vertex.left, vertex.right) }
-        .filterNot { child => child == null || visitedSet.contains(child) }
+        .filterNot(_ == null)
 
       if (fringe.isEmpty) {
         visited
       } else {
-        bfs_helper(fringe, visited :+ fringe, visitedSet ++ fringe)
+        bfs_helper(fringe, visited :+ fringe)
       }
     }
 
