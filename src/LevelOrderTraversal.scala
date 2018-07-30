@@ -24,16 +24,15 @@ object LevelOrderTraversal {
   def bfs(start: TreeNode): List[List[TreeNode]] = {
     @tailrec
     def bfs_helper(vertices: List[TreeNode],
-                   visited: List[List[TreeNode]],
-                   visitedSet: Set[TreeNode] = Set[TreeNode]()): List[List[TreeNode]] = {
+                   visited: List[List[TreeNode]]): List[List[TreeNode]] = {
       val fringe = vertices
-        .flatMap { vertex => List(vertex.left, vertex.right) }.distinct
-        .filterNot { child => child == null || visitedSet.contains(child) }
+        .flatMap { vertex => List(vertex.left, vertex.right) }
+        .filterNot(_ == null)
 
       if (fringe.isEmpty) {
         visited
       } else {
-        bfs_helper(fringe, visited :+ fringe, visitedSet ++ fringe)
+        bfs_helper(fringe, visited :+ fringe)
       }
     }
 
