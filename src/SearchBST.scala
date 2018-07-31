@@ -17,6 +17,17 @@ object SearchBST {
     }
   }
 
+  @tailrec
+  def searchBST2(root: TreeNode)(
+    implicit target: Int): TreeNode = {
+    Option(root) match {
+      case None => null
+      case _ if target == root.value => root
+      case _ if target < root.value => searchBST2(root.left)
+      case _ if target > root.value => searchBST2(root.right)
+    }
+  }
+
   def main(args: Array[String]): Unit = {
     val root = new TreeNode(2)
     val left = new TreeNode(1)
